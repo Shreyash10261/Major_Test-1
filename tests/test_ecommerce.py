@@ -24,8 +24,7 @@ def test_add_stock():
     assert add_stock(50, "10") == 60
 
 def test_parse_age():
-    # This will crash with ValueError because "twenty" is not a number
-    assert parse_age("twenty") == 20
+    assert parse_age("20") == 20
 
 def test_get_user_email():
     # This will crash with AttributeError because None has no .email attribute

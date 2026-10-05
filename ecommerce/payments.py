@@ -8,9 +8,7 @@ class PaymentProcessor:
 class StripeProcessor(PaymentProcessor):
     def process(self, amount):
         if amount <= 0:
-            # Complex Bug 1: Raising a generic Exception instead of a specific ValueError 
-            # that the test suite is strictly expecting.
-            raise Exception("Amount must be greater than zero")
+            raise ValueError("Amount must be greater than zero")
         return f"Processed ${amount} via Stripe"
 
 def execute_batch_payments(processors, amounts):
@@ -18,13 +16,12 @@ def execute_batch_payments(processors, amounts):
     Executes a batch of payments.
     """
     results = []
-    # Complex Bug 2: Modifying a list while iterating over it causes the iterator to skip elements.
-    for proc in processors:
+    # Iterating over a copy of processors to safely remove items from the original list
+    for proc in processors[:]:
         if not amounts:
             break
         amt = amounts.pop(0)
         results.append(proc.process(amt))
         if amt > 100:
-            # Removing an item from the list we are currently iterating over
             processors.remove(proc) 
     return results
