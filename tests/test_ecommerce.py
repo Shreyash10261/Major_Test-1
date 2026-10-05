@@ -1,7 +1,7 @@
 import pytest
 from ecommerce.orders import calculate_discount, process_order
 from ecommerce.inventory import get_first_item, add_stock
-from ecommerce.users import parse_age, get_user_email
+from ecommerce.users import parse_age, get_user_email, check_user_access
 
 class MockUser:
     def __init__(self, email):
@@ -29,3 +29,7 @@ def test_parse_age():
 def test_get_user_email():
     # This will crash with AttributeError because None has no .email attribute
     assert get_user_email(None) == ""
+
+def test_check_user_access():
+    # This will crash with TypeError because "admin" > 5 is invalid
+    assert check_user_access("admin") == True

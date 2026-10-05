@@ -10,3 +10,10 @@ def get_user_email(user_obj):
     if user_obj is None:
         return ""
     return user_obj.email
+
+def check_user_access(user_role):
+    """Checks user access. Fails with TypeError if user_role is a string."""
+    # Bug: > not supported between str and int
+    if user_role > 5:
+        return True
+    return False
