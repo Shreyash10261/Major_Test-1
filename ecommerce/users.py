@@ -12,8 +12,12 @@ def get_user_email(user_obj):
     return user_obj.email
 
 def check_user_access(user_role):
-    """Checks user access. Fails with TypeError if user_role is a string."""
-    # Bug: > not supported between str and int
-    if user_role > 5:
+    """Checks user access."""
+    if user_role == "admin":
         return True
+    try:
+        if int(user_role) > 5:
+            return True
+    except (ValueError, TypeError):
+        pass
     return False
